@@ -60,12 +60,42 @@ function init() {
                         const departmentName = input.departmentName;
                         db.query(`INSERT INTO departments (name)
                         VALUES ("${departmentName}")`, function (error, results){
-                        const departmentName = input.departmentName;
                             console.log(`Added ${departmentName} department to the database`);
                             init();
                         })
                     });
                     break
+                case "Add a Role" :
+                    inquirer
+                        .prompt([
+                            {
+                                type: 'input',
+                                name: 'roleName',
+                                message: 'What is the name of the role?',
+                            },
+                            {
+                                type: 'input',
+                                name: 'roleSalary',
+                                message: 'What is the Salary of the role?',
+                            },
+                            {
+                                type: 'list',
+                                name: 'roleDepartment',
+                                message: 'Which department does it belong to?',
+                                choices: ["Sales","Engineering","Finance","Legal"]
+                            },
+                        ])
+                        .then(input => { 
+                            const roleName = input.roleName;
+                            const roleSalary = input.roleSalary;
+                            const roleDepartment = input.roleDepartment;
+                            db.query(`INSERT INTO roles (title, department, salary)
+                            VALUES ("${roleName}","${roleDepartment}","${roleSalary}")`, function (error, results){
+                                console.log(`Added ${roleName} department to the database`);
+                                init();
+                            })
+                        });
+                        break
             }
         })
 }
