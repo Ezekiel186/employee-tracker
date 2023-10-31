@@ -47,6 +47,25 @@ function init() {
                         init();
                     })
                     break;
+                case "Add a Department" :
+                    inquirer
+                        .prompt([
+                        {
+                            type: 'input',
+                            name: 'departmentName',
+                            message: 'What is the name of the department?',
+                        },
+                    ])
+                    .then(input => { 
+                        const departmentName = input.departmentName;
+                        db.query(`INSERT INTO departments (name)
+                        VALUES ("${departmentName}")`, function (error, results){
+                        const departmentName = input.departmentName;
+                            console.log(`Added ${departmentName} department to the database`);
+                            init();
+                        })
+                    });
+                    break
             }
         })
 }
