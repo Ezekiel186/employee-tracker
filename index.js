@@ -42,7 +42,10 @@ function init() {
                     })
                     break;
                 case "View All Employees":
-                    
+                    db.query('SELECT * from employees', function (error, results){
+                        console.log(results);
+                        init();
+                    })
                     break;
             }
         })

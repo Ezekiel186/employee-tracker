@@ -16,3 +16,15 @@ CREATE TABLE roles(
     department TEXT NOT NULL,
     salary INT NOT NULL
 );
+
+DROP TABLE IF EXISTS employees;
+CREATE TABLE employees(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    roles_id INT,
+    title TEXT NOT NULL,
+    department TEXT NOT NULL,
+    salary INT NOT NULL,
+    manager TEXT
+);
