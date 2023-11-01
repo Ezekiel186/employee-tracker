@@ -96,6 +96,74 @@ function init() {
                             })
                         });
                         break
+                        case "Add an Employee" :
+                    inquirer
+                        .prompt([
+                            {
+                                type: 'input',
+                                name: 'employeeName',
+                                message: "What is the employee's first name?",
+                            },
+                            {
+                                type: 'input',
+                                name: 'employeeLast',
+                                message: "What is the employee's last name?",
+                            },
+                            {
+                                type: 'list',
+                                name: 'employeeRole',
+                                message: "What is the employee's role?",
+                                choices: ["Sales Lead","Salesperson","Lead Engineer","Software Engineer","Account Manager","Accountant","Legal Team Lead","Lawyer"]
+                            },
+                            {
+                                type: 'list',
+                                name: 'employeeManager',
+                                message: "Who is the employee's manager?",
+                                choices: ["None","John Doe","Asheley Rodriguez","Kunal Singh","Sarah Lourd"]
+                            },
+                        ])
+                        .then(input => { 
+                            const employeeName = input.employeeName;
+                            const employeeLast = input.employeeLast;
+                            const employeeRole = input.employeeRole;
+                            const employeeManager = input.employeeManager;
+                            if (employeeManager === "None") {
+                                var manager = "null"
+                            } else {
+                                manager = employeeManager
+                            }
+                            if (employeeRole === "Sales Lead") {
+                                var department = "Sales"
+                                var salary = `100000`
+                            } else if (employeeRole === "Salesperson") {
+                                var department = "Sales"
+                                var salary = `80000`
+                            } else if (employeeRole === "Lead Engineer") {
+                                var department = "Engineering"
+                                var salary = `150000`
+                            } else if (employeeRole === "Software Engineer") {
+                                var department = "Engineering"
+                                var salary = `120000`
+                            } else if (employeeRole === "Account Manager") {
+                                var department = "Finance"
+                                var salary = `160000`
+                            } else if (employeeRole === "Accountant") {
+                                var department = "Finance"
+                                var salary = `125000`
+                            } else if (employeeRole === "Legal Team Lead") {
+                                var department = "Legal"
+                                var salary = `250000`
+                            } else if (employeeRole === "Lawyer") {
+                                var department = "Legal"
+                                var salary = `190000`
+                            } 
+                            db.query(`INSERT INTO employees (first_name, last_name, title, department, salary, manager)
+                            VALUES ("${employeeName}","${employeeLast}","${employeeRole}","${department}",${salary},${manager})`, function (error, results){
+                                console.log(`Added ${employeeName} ${employeeLast} department to the database`);
+                                init();
+                            })
+                        });
+                        break
             }
         })
 }
