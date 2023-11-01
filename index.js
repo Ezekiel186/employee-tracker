@@ -164,6 +164,59 @@ function init() {
                             })
                         });
                         break
+                        case "Update an Employee Role" : 
+                        inquirer
+                        .prompt([
+                            {
+                                type: 'list',
+                                name: 'chosenEmployee',
+                                message: "Which employee would you like to update?",
+                                choices: ["John Doe","Mike Chan","Asheley Rodriguez","Kevin Tupik","Kunal Singh","Malia Brown","Sarah Lourd","Tom Allen"]
+                            },
+                            {
+                                type: 'list',
+                                name: 'chosenRole',
+                                message: "Which role do you want to assign the selected employee?",
+                                choices: ["Sales Lead","Salesperson","Lead Engineer","Software Engineer","Account Manager","Accountant","Legal Team Lead","Lawyer"]
+                            },
+                        ])
+                        .then(input => { 
+                            const chosenRole = input.chosenRole;
+                            const chosenEmployee = input.chosenEmployee;
+                            if (chosenEmployee === "Sales Lead") {
+                                var department = "Sales"
+                                var salary = `100000`
+                            } else if (chosenRole === "Salesperson") {
+                                var department = "Sales"
+                                var salary = `80000`
+                            } else if (chosenRole === "Lead Engineer") {
+                                var department = "Engineering"
+                                var salary = `150000`
+                            } else if (chosenRole === "Software Engineer") {
+                                var department = "Engineering"
+                                var salary = `120000`
+                            } else if (chosenRole === "Account Manager") {
+                                var department = "Finance"
+                                var salary = `160000`
+                            } else if (chosenRole === "Accountant") {
+                                var department = "Finance"
+                                var salary = `125000`
+                            } else if (chosenRole === "Legal Team Lead") {
+                                var department = "Legal"
+                                var salary = `250000`
+                            } else if (chosenRole === "Lawyer") {
+                                var department = "Legal"
+                                var salary = `190000`
+                            } 
+                            var firstName = chosenEmployee.split(" ")
+                            db.query(`UPDATE employees
+                            SET title = "${chosenRole}", department = "${department}", salary = ${salary}
+                            WHERE first_name = '${firstName[0]}';`, function (error, results){
+                                console.log(`updated employee's role`);
+                                init();
+                            })
+                        });
+                        break
             }
         })
 }
